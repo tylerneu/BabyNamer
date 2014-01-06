@@ -42,3 +42,5 @@ plugins:
     log_queries: 1
   Ajax:
     content_type: 'application/json'
+
+session: "YAML"

@@ -1,3 +1,4 @@
 <h1 id="name"><% name.name %></h1>
 
 <button id="get_random_name">Get Name</button>
+<button id="get_random_name_count">Get Count</button>

@@ -6,14 +6,23 @@ use Dancer::Plugin::Ajax;
 our $VERSION = '0.1';
 
 get '/' => sub {
-
+  
+  session 'random_name_count' => 0;
+  
   template 'index', {
-    name => get_random_name() ,
+    name => get_random_name(),
   };
+  
 };
 
-ajax '/random_name' => sub {  
+ajax '/random_name' => sub {
+  my $count = session 'random_name_count';
+  session 'random_name_count' => ++$count;
   return to_json(get_random_name());
+};
+
+ajax '/random_name_count' => sub {  
+  return to_json({count => session 'random_name_count'});
 };
 
 true;
