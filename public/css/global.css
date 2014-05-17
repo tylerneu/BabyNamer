@@ -1,0 +1,12 @@
+#saved_names {
+  float: right;
+  border: 1px solid black;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+#saved_names li {
+  margin: 0;
+  padding: 0;
+}
