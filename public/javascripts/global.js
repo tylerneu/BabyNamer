@@ -61,7 +61,7 @@ function show_random_name_data() {
         $.each(json.years, function(year) {
           var y = json.years[year];
           $('<li></li>', {
-            text: y.name, y.sex, y.year, json.years[year].yearly_score].join(' : ')
+            text: [y.name, y.sex, y.year, json.years[year].yearly_score].join(' : ')
           }).appendTo($('#name_data'));
         });
       },
