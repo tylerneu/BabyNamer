@@ -27,7 +27,7 @@ function save_name() {
   var current_name = $( "body" ).data( "current_name");
   if ($.inArray(current_name, saved_names) == -1) saved_names.push(current_name);
 
-  $.cookie("saved_names", saved_names);
+  $.cookie("saved_names", saved_names, { expires: 365 });
   
   // Refresh list
   get_saved_names();
