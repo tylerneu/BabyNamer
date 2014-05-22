@@ -46,6 +46,8 @@ function get_saved_names() {
 }
 
 function show_random_name_data() {
+
+  $('#name_data').empty().spin('large');
   
   $.ajax({
       url: "/random_name",
@@ -57,7 +59,9 @@ function show_random_name_data() {
         // Save current name for saving
         $( "body" ).data( "current_name", json.current_name );
         
+        // spinner.stop();
         $('#name_data').empty();
+        
         $.each(json.years, function(year) {
           var y = json.years[year];
           $('<li></li>', {
