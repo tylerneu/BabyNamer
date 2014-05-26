@@ -51,7 +51,9 @@ function get_saved_names() {
 
 function show_random_name_data() {
 
-  $('#name_data').empty().spin('large');
+  $('#name').empty().spin('large');
+  $('#name_sex').empty();
+  $('#name_data').empty();
   
   $.ajax({
       url: "/random_name",
@@ -61,15 +63,16 @@ function show_random_name_data() {
       success: function( json ) {
         
         // Save current name for saving
-        $( "body" ).data( "current_name", json.current_name );
+        $( "body" ).data( "current_name", json.name );
         
-        // spinner.stop();
-        $('#name_data').empty();
+        $('#name').empty();
+        $('#name').text(json.name);
+        $('#name_sex').text(json.sex);
         
         $.each(json.years, function(year) {
           var y = json.years[year];
           $('<li></li>', {
-            text: [y.name, y.sex, y.year, json.years[year].yearly_score].join(' : ')
+            text: [y.year, json.years[year].yearly_score].join(' : ')
           }).appendTo($('#name_data'));
         });
       },

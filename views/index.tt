@@ -8,4 +8,6 @@
   <option value="F">Female</option>
 </select>
 
+<h1 id="name"></h1>
+<h2 id="name_sex"></h2>
 <ul id="name_data"></ul>

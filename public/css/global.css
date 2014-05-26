@@ -11,6 +11,16 @@
   padding: 0;
 }
 
-#name_data {
+#name {
+  margin: 0;
   position: relative;
+}
+
+#name_sex {
+  margin: 0;
+}
+
+#name_data {
+  margin: 0;
+  padding: 0;
 }

@@ -18,14 +18,13 @@ ajax '/random_name' => sub {
   
   my $sth = database->prepare('SELECT name.id, name.name, name.sex, score.year, SUM(score.score) as yearly_score FROM name JOIN `score` on name.id = score.name_id WHERE name.id IN (SELECT rand_id FROM rands) GROUP BY score.year;');
   $sth->execute();
+  my $data = $sth->fetchall_hashref(['year']);
   
-  my $data = { years => $sth->fetchall_hashref(['year']) };  
-  
-  debug Dumper($data);
-  
-  $data->{current_name} = $data->{years}{(keys %{$data->{years}})[0]}{name};
-  $data->{current_sex} = $data->{years}{(keys %{$data->{years}})[0]}{sex};
-  return to_json($data);
+  return to_json({
+    name  => $data->{(keys %{$data})[0]}{name},
+    sex   => $data->{(keys %{$data})[0]}{sex},
+    years => $data,
+  });
 };
 
 true;
