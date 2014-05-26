@@ -3,4 +3,9 @@
 <button id="get_random_name">Get Name</button>
 <button id="save_name">Save Name</button>
 
+<select id="sex">
+  <option value="M">Male</option>
+  <option value="F">Female</option>
+</select>
+
 <ul id="name_data"></ul>

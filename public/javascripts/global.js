@@ -10,6 +10,10 @@ $(function() {
     show_random_name_data();
   });
   
+  $('#sex').change(function() {
+    show_random_name_data();
+  });
+  
   get_saved_names();
   show_random_name_data();
     
@@ -53,7 +57,7 @@ function show_random_name_data() {
       url: "/random_name",
       type: "GET",
       dataType : "json",
-      
+      data: { sex: $('#sex').val() },
       success: function( json ) {
         
         // Save current name for saving
