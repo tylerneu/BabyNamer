@@ -59,7 +59,7 @@ function show_random_name_data() {
       url: "/random_name",
       type: "GET",
       dataType : "json",
-      data: { sex: $('#sex').val() },
+      data: { sex: $('#sex').val(), popular_names: $('#popular_names').prop('checked') },
       success: function( json ) {
         
         // Save current name for saving

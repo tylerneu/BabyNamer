@@ -13,10 +13,11 @@ get '/' => sub {
 ajax '/random_name' => sub {
   
   my $sex = params->{sex};
+  my $popular_names = params->{popular_names} eq 'true' ? 1 : 0;
   
-  my $rows = database->do("CALL get_rands(1, ?)", undef, $sex);
+  my $rows = database->do("CALL get_rands(1, ?, ?)", undef, $sex, $popular_names);
   
-  my $sth = database->prepare('SELECT name.id, name.name, name.sex, score.year, SUM(score.score) as yearly_score FROM name JOIN `score` on name.id = score.name_id WHERE name.id IN (SELECT rand_id FROM rands) GROUP BY score.year;');
+  my $sth = database->prepare('SELECT name.id, name.name, name.sex, score.year, SUM(score.score) as yearly_score, name.recent_total_names FROM name JOIN `score` on name.id = score.name_id WHERE name.id IN (SELECT rand_id FROM rands) GROUP BY score.year;');
   $sth->execute();
   my $data = $sth->fetchall_hashref(['year']);
   

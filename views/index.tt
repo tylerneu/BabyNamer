@@ -8,6 +8,9 @@
   <option value="F">Female</option>
 </select>
 
+<label for="popular_names">Popular Names?</label><input type="checkbox" name="popular_names" value="" id="popular_names">
+
+
 <h1 id="name"></h1>
 <h2 id="name_sex"></h2>
 <ul id="name_data"></ul>
