@@ -5,7 +5,7 @@ use warnings;
 
 use DBI;
 
-my $dbh = DBI->connect('DBI:mysql:BabyNamer', 'root', 'password') or die "Couldn't connect to database: " . DBI->errstr;
+my $dbh = DBI->connect('DBI:mysql:BabyNamer', 'root', '9ClJ8Wt1') or die "Couldn't connect to database: " . DBI->errstr;
 $dbh->{RaiseError} = 1;
 
 while (defined(my $file = glob 'data/SSA\ Baby\ Names\ by\ State/*')) {
