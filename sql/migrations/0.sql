@@ -1,4 +1,4 @@
-DROP DATABASE `BabyNamer`;
+DROP DATABASE IF EXISTS `BabyNamer`;
 CREATE DATABASE IF NOT EXISTS `BabyNamer`;
 
 use `BabyNamer`;
