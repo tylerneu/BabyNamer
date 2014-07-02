@@ -1,3 +1,4 @@
 .DS_Store
 sessions
 data/seed.sql
+config.yml
