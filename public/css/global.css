@@ -11,6 +11,11 @@
   padding: 0;
 }
 
+#saved_names li:hover {
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
 #name {
   margin: 0;
   position: relative;

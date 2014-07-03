@@ -38,12 +38,30 @@ function save_name() {
   
 }
 
+function remove_name(name) {
+	
+	var saved_names = $.cookie("saved_names") || [];
+	
+	saved_names = $.grep(saved_names, function(n,i) {
+	  return n != name;
+	});
+	
+	$.cookie("saved_names", saved_names, { expires: 365 });
+	
+    // Refresh list
+    get_saved_names();
+
+}
+
 function get_saved_names() {
   
   $('#saved_names').empty();
   $.each($.cookie("saved_names"), function(index, name_text) {
     $('<li></li>', {
-      text: name_text
+      text: name_text,
+	  click: function() {
+		  remove_name(name_text);
+	  }
     }).appendTo($('#saved_names'));
   });  
   
