@@ -14,6 +14,15 @@ $(function() {
     show_random_name_data();
   });
   
+  $('#popular_names').click(function() {
+    show_random_name_data();
+  });
+  
+  // Set controls based on last selections
+  var saved_controls = $.cookie("saved_controls");
+  $('#sex').val(saved_controls.sex);
+  $('#popular_names').prop('checked', saved_controls.popularity);
+  
   get_saved_names();
   show_random_name_data();
     
@@ -68,6 +77,8 @@ function get_saved_names() {
 }
 
 function show_random_name_data() {
+  
+  save_controls();
 
   $('#name').empty().spin('large');
   $('#name_sex').empty();
@@ -101,4 +112,8 @@ function show_random_name_data() {
           // alert( "The request is complete!" );
       }
   });
+}
+
+function save_controls() {
+ $.cookie("saved_controls", { sex: $('#sex').val(), popularity: $('#popular_names').prop('checked') }, { expires: 365 }); 
 }
