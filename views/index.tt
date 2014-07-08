@@ -4,6 +4,7 @@
 <button id="save_name">Save Name</button>
 
 <select id="sex">
+  <option value="">Male or Female</option>
   <option value="M">Male</option>
   <option value="F">Female</option>
 </select>

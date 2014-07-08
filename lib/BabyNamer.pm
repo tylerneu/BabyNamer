@@ -12,7 +12,7 @@ get '/' => sub {
 
 ajax '/random_name' => sub {
   
-  my $sex = params->{sex};
+  my $sex = params->{sex} ? params->{sex} : undef;
   my $popular_names = params->{popular_names} eq 'true' ? 1 : 0;
   
   my $rows = database->do("CALL get_rands(1, ?, ?)", undef, $sex, $popular_names);
