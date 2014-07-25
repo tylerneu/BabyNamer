@@ -46,30 +46,42 @@ $(function() {
 // ========================================================================== //
 
 
+function current_name() {
+  
+  var buffer_index = $.cookie("buffer_index") || 0;  
+  recent_names = JSON.parse(localStorage.getItem('recent_names')) || {};
+  json = recent_names[buffer_index];
+  return json;
+  
+}
+
 function save_name() {
   
-  var saved_names = $.cookie("saved_names") || [];
+  var saved_names = JSON.parse(localStorage.getItem("saved_names")) || {};
+  
+  var name = current_name();
   
   // Only insert if it doesn't exist in the list
-  var current_name = $( "body" ).data( "current_name");
-  if ($.inArray(current_name, saved_names) == -1) saved_names.push(current_name);
-
-  $.cookie("saved_names", saved_names, { expires: 365 });
+  //if ($.inArray(current_name, saved_names) == -1) 
+  
+  saved_names[name[Object.keys(name)[0]].id] = name;
+  //  saved_names[name[0].id] = name;
+  //json[Object.keys(json)[0]].name
+  
+  localStorage.setItem("saved_names", JSON.stringify(saved_names));
   
   // Refresh list
   get_saved_names();
   
 }
 
-function remove_name(name) {
+function remove_name(id) {
 	
-	var saved_names = $.cookie("saved_names") || [];
+	var saved_names = JSON.parse(localStorage.getItem("saved_names")) || {};
+  
+  delete saved_names[id];
 
-	saved_names = $.grep(saved_names, function(n,i) {
-	  return n != name;
-	});
-
-	$.cookie("saved_names", saved_names, { expires: 365 });
+	localStorage.setItem("saved_names", JSON.stringify(saved_names));
 	
   // Refresh list
   get_saved_names();
@@ -78,12 +90,17 @@ function remove_name(name) {
 
 function get_saved_names() {
   
+  var saved_names = JSON.parse(localStorage.getItem("saved_names")) || [];
+  
   $('#saved_names').empty();
-  $.each($.cookie("saved_names") || [], function(index, name_text) {
+  $.each(saved_names, function(id, name_data) {
+    
+    name_data = name_data[Object.keys(name_data)[0]];
+    
     $('<li></li>', {
-      text: name_text,
+      text: name_data.name + ', ' + name_data.sex,
       click: function() {
-		    remove_name(name_text);
+		    remove_name(name_data.id);
 	    }
     }).appendTo($('#saved_names'));
   });   

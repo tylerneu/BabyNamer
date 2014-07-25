@@ -64,23 +64,18 @@ function render_name() {
   
   //debug();
   
-  var buffer_index = $.cookie("buffer_index") || 0;
-  
-    recent_names = JSON.parse(localStorage.getItem('recent_names')) || {};
-    json = recent_names[buffer_index];
+  var json = current_name();
     
-    $( "body" ).data( "current_name", json[Object.keys(json)[0]].name );
-  
-    $('#name').text(json[Object.keys(json)[0]].name);
-    $('#name_sex').text(json[Object.keys(json)[0]].sex);
-    $('#name_data').empty();
-      
-    $.each(json, function(year) {
-      var y = json[year];
-      $('<li></li>', {
-        text: [y.year, json[year].yearly_score].join(' : ')
-      }).appendTo($('#name_data'));  
-    });
+  $('#name').text(json[Object.keys(json)[0]].name);
+  $('#name_sex').text(json[Object.keys(json)[0]].sex);
+  $('#name_data').empty();
+    
+  $.each(json, function(year) {
+    var y = json[year];
+    $('<li></li>', {
+      text: [y.year, json[year].yearly_score].join(' : ')
+    }).appendTo($('#name_data'));  
+  });
   
 }
 
