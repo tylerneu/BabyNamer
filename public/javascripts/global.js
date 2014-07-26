@@ -25,6 +25,7 @@ $(function() {
     switch(e.which) {
       case 106: display_previous_name(); break; // "j"
       case 107: display_next_name(); break; // "k"
+      case 115: save_name(); break; // "s"
     }
   });
   
