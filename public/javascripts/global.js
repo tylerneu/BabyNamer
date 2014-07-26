@@ -11,12 +11,12 @@ $(function() {
   })
   
   $('#sex').change(function() {
-    // TODO, clear buffer
+    empty_buffer();
     display_next_name();
   });
   
   $('#popular_names').click(function() {
-    // TODO, clear buffer
+    empty_buffer();
     display_next_name();
   });
   

@@ -19,6 +19,11 @@ function debug() {
   
 }
 
+function empty_buffer() {
+  $.cookie("buffer_index", 0, { expires: 365 }); 
+  localStorage.setItem('recent_names', JSON.stringify([]));
+}
+
 function display_previous_name() {
 
   // Decrease buffer index  
