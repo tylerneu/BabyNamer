@@ -16,16 +16,16 @@
   cursor: pointer;
 }
 
-#name {
+.name {
   margin: 0;
   position: relative;
 }
 
-#name_sex {
+.name_sex {
   margin: 0;
 }
 
-#name_data {
+.name_data {
   margin: 0;
   padding: 0;
 }
