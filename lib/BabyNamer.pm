@@ -36,7 +36,7 @@ get '/name/:id' => sub {
     years => $data,
   };
   
-  template 'name.tt', $data, { layout => undef };
+  template 'name', $data, { layout => 'names_layout' };
   
 };
 
@@ -46,9 +46,11 @@ get '/names' => sub {
   
   my $sth = database->prepare("SELECT name.id, name.name, name.sex FROM name WHERE name LIKE ? ORDER BY name DESC;");
   $sth->execute(params->{query});
-  my $data = $sth->fetchall_hashref(['id']);
   
-  template 'names.tt', { names => $data }, { layout => undef };
+  my $data = $sth->fetchall_hashref(['id']);
+  my @mapped_data = map { $data->{$_} } keys %$data;
+  
+  template 'search', { variable => "", names => \@mapped_data }, { layout => 'names_layout' };
   
 };
 
@@ -70,9 +72,7 @@ get '/year/:year' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{year_score} <=> $data->{$a}->{year_score} } keys %$data;
   
-  debug Dumper(\@sorted_data);
-  
-  template 'names.tt', { variable => $year, names => \@sorted_data }, { layout => undef };
+  template 'names', { variable => $year, names => \@sorted_data }, { layout => 'names_layout' };
   
 };
 
@@ -94,7 +94,7 @@ get '/state/:state' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{state_score} <=> $data->{$a}->{state_score} } keys %$data;
   
-  template 'names.tt', { variable => $state, names => \@sorted_data }, { layout => undef };
+  template 'names', { variable => $state, names => \@sorted_data }, { layout => 'names_layout' };
   
 };
 
@@ -117,7 +117,7 @@ get '/year/:year/state/:state' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{state_score} <=> $data->{$a}->{state_score} } keys %$data;
   
-  template 'names.tt', { variable => "$year in $state", names => \@sorted_data }, { layout => undef };
+  template 'names', { variable => "$year in $state", names => \@sorted_data }, { layout => 'names_layout' };
   
 };
 

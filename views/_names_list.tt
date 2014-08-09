@@ -1,0 +1,5 @@
+<ol>
+<% FOREACH name IN names %>
+  <li><a href="/name/<% name.id %>"><% name.name %> : <% name.sex %></a></li>
+<% END %>
+</ol>
