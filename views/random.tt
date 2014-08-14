@@ -1,0 +1,18 @@
+<h1>Random</h1>
+
+<ul id="saved_names"></ul>
+
+<button id="get_random_name">Get Name</button>
+<button id="save_name">Save Name</button>
+
+<select id="sex">
+  <option value="">Male or Female</option>
+  <option value="M">Male</option>
+  <option value="F">Female</option>
+</select>
+
+<label for="popular_names">Popular Names?</label><input type="checkbox" name="popular_names" value="" id="popular_names">
+
+<h1 id="name" class="name"></h1>
+<h2 id="name_sex" class="name_sex"></h2>
+<ul id="name_data" class="name_data"></ul>

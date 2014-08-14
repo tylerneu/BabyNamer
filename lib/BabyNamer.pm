@@ -10,6 +10,10 @@ get '/' => sub {
   template 'index', {};
 };
 
+get '/random' => sub {
+  template 'random', {};  
+};
+
 ajax '/random_name' => sub {
   
   my $sex = params->{sex} ? params->{sex} : undef;
@@ -42,16 +46,25 @@ get '/name/:id' => sub {
 
 # SEARCH
 
-get '/names' => sub {
+get '/search' => sub {
+  template 'search', {};
+};
+
+any ['get', 'post'] => '/search' => sub {
   
   my $sth = database->prepare("SELECT name.id, name.name, name.sex FROM name WHERE name LIKE ? ORDER BY name DESC;");
-  $sth->execute(params->{query});
+  $sth->execute('%'.params->{query}.'%');
   
   my $data = $sth->fetchall_hashref(['id']);
   my @mapped_data = map { $data->{$_} } keys %$data;
   
   template 'search', { variable => "", names => \@mapped_data }, { layout => 'names_layout' };
   
+};
+
+get '/browse' => sub {
+  
+  template 'browse', { years => [(1910..2012)], states => ['AK','AL','AR','AZ','CA','CO','CT','DC','DE','FL','GA','HI','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY'] };
 };
 
 # POPULAR NAMES BY YEAR

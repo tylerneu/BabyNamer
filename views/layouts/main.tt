@@ -19,7 +19,6 @@
   	<script src="/javascripts/names.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
-    <h1>main</h1>
     <% content %>
   </body>
 </html>

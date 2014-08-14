@@ -1,0 +1,15 @@
+<h1>Browse</h1>
+
+<h2>Years</h2>
+<ul>
+  <% FOREACH year IN years %>
+  <li><a href="/year/<% year %>"><% year %></a></li>
+  <% END %>
+</ul>
+
+<h2>States</h2>
+<ul>
+  <% FOREACH state IN states %>
+  <li><a href="/state/<% state %>"><% state %></a></li>
+  <% END %>
+</ul>
