@@ -31,3 +31,13 @@
 #menu li {
   display: inline;
 }
+
+.least_popular {
+  font-weight: bold;
+  color: red;
+}
+
+.most_popular {
+  font-weight: bold;
+  color: green;
+}

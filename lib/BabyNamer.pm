@@ -34,11 +34,52 @@ get '/name/:id' => sub {
   $sth->execute(params->{id});
   my $data = $sth->fetchall_hashref(['year']);
 
+  # Determine least and most popular year. 
+  my @least_popular_years = ($data->{(keys %$data)[0]}->{year}); # Initialize for comparisons
+  my @most_popular_years  = ($data->{(keys %$data)[0]}->{year}); #
+
+  foreach my $year (keys %$data) {
+
+    # New lowest score 
+    if ($data->{$year}->{yearly_score} < $data->{$least_popular_years[0]}->{yearly_score}) {
+      @least_popular_years = ($year);
+    }
+
+    # Another year with lowest score found
+    elsif ($data->{$year}->{yearly_score} == $data->{$least_popular_years[0]}->{yearly_score}) {
+      push @least_popular_years, $year;
+    }
+
+    # New highest score
+    elsif ($data->{$year}->{yearly_score} > $data->{$most_popular_years[0]}->{yearly_score}) {
+      @most_popular_years = ($year);
+    }
+
+    # Another year with highest score found
+    elsif ($data->{$year}->{yearly_score} == $data->{$most_popular_years[0]}->{yearly_score}) {
+      push @most_popular_years, $year;
+    }
+
+    else {
+       # Not special
+    }  
+
+  }
+
+  # Find years
+  foreach my $least_year (@least_popular_years) {
+    $data->{$least_year}->{popularity} = 'least';
+  }
+
+  foreach my $most_year (@most_popular_years) {
+    $data->{$most_year}->{popularity} = 'most';
+  }
+
   $data = {
-    id   => $data->{(keys %$data)[0]}->{id},
-    name => $data->{(keys %$data)[0]}->{name},
-    sex  => $data->{(keys %$data)[0]}->{sex},   
-    years => $data,
+    id                  => $data->{(keys %$data)[0]}->{id},   # 
+    name                => $data->{(keys %$data)[0]}->{name}, # Pull demographics from first year listed
+    sex                 => $data->{(keys %$data)[0]}->{sex},  # 
+    years               => $data,
   };
   
   template 'name', $data;

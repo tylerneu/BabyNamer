@@ -23,10 +23,12 @@
 
     <h1 class="name"><% name %></h1>
     <h2 class="name_sex"><% sex %></h2>
-    
+
     <ul class="name_data">
     <% FOREACH year IN years %>
-      <li><% year.key %> : <% year.value.yearly_score %>
+      <li class="<% year.value.popularity ? year.value.popularity _ '_popular' : '' %>">
+        <% year.key %> : <% year.value.yearly_score %>
+      </li>
     <% END %>
     </ul>
   </body>
