@@ -1,9 +1,8 @@
 <h1>Random</h1>
 
-<ul id="saved_names"></ul>
+<% INCLUDE '_saved_names.tt' button = 1 %>
 
 <button id="get_random_name">Get Name</button>
-<button id="save_name">Save Name</button>
 
 <select id="sex">
   <option value="">Male or Female</option>

@@ -49,10 +49,24 @@ $(function() {
 
 function current_name() {
   
-  var buffer_index = $.cookie("buffer_index") || 0;  
-  recent_names = JSON.parse(localStorage.getItem('recent_names')) || {};
-  json = recent_names[buffer_index];
-  return json;
+  // Lame way of determining this is a name page
+  if ($('#name').val() && $('#sex').val() && $('#id').val()) {
+    
+    // Mimic structure of random name data
+    var data = { 
+      '0' : {
+        'id':   $('#id').val(), 
+        'name': $('#name').val(), 
+        'sex':  $('#sex').val()          
+      }
+    };
+    return data;
+  } else {
+    var buffer_index = $.cookie("buffer_index") || 0;  
+    recent_names = JSON.parse(localStorage.getItem('recent_names')) || {};
+    json = recent_names[buffer_index];
+    return json;
+  }
   
 }
 
@@ -62,12 +76,7 @@ function save_name() {
   
   var name = current_name();
   
-  // Only insert if it doesn't exist in the list
-  //if ($.inArray(current_name, saved_names) == -1) 
-  
   saved_names[name[Object.keys(name)[0]].id] = name;
-  //  saved_names[name[0].id] = name;
-  //json[Object.keys(json)[0]].name
   
   localStorage.setItem("saved_names", JSON.stringify(saved_names));
   

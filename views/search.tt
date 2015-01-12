@@ -4,13 +4,4 @@
     
 <% INCLUDE '_names_list.tt' %>
 
-<% ELSE %>
-
-<h1>Search</h1>
-
-<form action="search" method="post" accept-charset="utf-8">
-  <p><input type="text" name="query" />
-  <p><input type="submit" value="Search"></p>
-</form>
-
 <% END %>

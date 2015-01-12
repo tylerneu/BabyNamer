@@ -2,3 +2,4 @@
 sessions
 data/seed.sql
 config.yml
+sql/dump.sql

@@ -17,7 +17,7 @@ get '/random' => sub {
 ajax '/random_name' => sub {
   
   my $sex = params->{sex} ? params->{sex} : undef;
-  my $popular_names = params->{popular_names} eq 'true' ? 1 : 0;
+  my $popular_names = params->{popular_names} && params->{popular_names} eq 'true' ? 1 : 0;
   
   database->do("CALL get_rands(5, ?, ?)", undef, $sex, $popular_names);
   
@@ -35,12 +35,13 @@ get '/name/:id' => sub {
   my $data = $sth->fetchall_hashref(['year']);
 
   $data = {
+    id   => $data->{(keys %$data)[0]}->{id},
     name => $data->{(keys %$data)[0]}->{name},
     sex  => $data->{(keys %$data)[0]}->{sex},   
     years => $data,
   };
   
-  template 'name', $data, { layout => 'names_layout' };
+  template 'name', $data;
   
 };
 
@@ -58,7 +59,7 @@ any ['get', 'post'] => '/search' => sub {
   my $data = $sth->fetchall_hashref(['id']);
   my @mapped_data = map { $data->{$_} } keys %$data;
   
-  template 'search', { variable => "", names => \@mapped_data }, { layout => 'names_layout' };
+  template 'search', { variable => "", names => \@mapped_data };
   
 };
 
@@ -85,7 +86,7 @@ get '/year/:year' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{year_score} <=> $data->{$a}->{year_score} } keys %$data;
   
-  template 'names', { variable => $year, names => \@sorted_data }, { layout => 'names_layout' };
+  template 'names', { variable => $year, names => \@sorted_data };
   
 };
 
@@ -107,7 +108,7 @@ get '/state/:state' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{state_score} <=> $data->{$a}->{state_score} } keys %$data;
   
-  template 'names', { variable => $state, names => \@sorted_data }, { layout => 'names_layout' };
+  template 'names', { variable => $state, names => \@sorted_data };
   
 };
 
@@ -130,7 +131,7 @@ get '/year/:year/state/:state' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{state_score} <=> $data->{$a}->{state_score} } keys %$data;
   
-  template 'names', { variable => "$year in $state", names => \@sorted_data }, { layout => 'names_layout' };
+  template 'names', { variable => "$year in $state", names => \@sorted_data };
   
 };
 

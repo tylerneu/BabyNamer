@@ -1,3 +1,1 @@
-<h1><a href="/random">Random</a></h1>
-<h1><a href="/search">Search</a></h1>
-<h1><a href="/browse">Browse</a></h1>
+<% INCLUDE '_saved_names.tt' button = 0 %>
