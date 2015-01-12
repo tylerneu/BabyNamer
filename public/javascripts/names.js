@@ -101,7 +101,7 @@ function retrieve_random_names(pre_flag) {
         $('#name_data').empty();
       },
       success: function( json ) {
-        
+
         // Buffer        
         var recent_names = JSON.parse(localStorage.getItem('recent_names')) || [];
 

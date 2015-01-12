@@ -1,0 +1,5 @@
+<% IF button %>
+<button id="save_name">Save Name</button>  
+<% END %>
+
+<ul id="saved_names"></ul>

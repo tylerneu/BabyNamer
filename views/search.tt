@@ -1,0 +1,7 @@
+<% IF names %>
+
+<h1>Results</h1>
+    
+<% INCLUDE '_names_list.tt' %>
+
+<% END %>

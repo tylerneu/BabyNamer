@@ -10,10 +10,14 @@ get '/' => sub {
   template 'index', {};
 };
 
+get '/random' => sub {
+  template 'random', {};  
+};
+
 ajax '/random_name' => sub {
   
   my $sex = params->{sex} ? params->{sex} : undef;
-  my $popular_names = params->{popular_names} eq 'true' ? 1 : 0;
+  my $popular_names = params->{popular_names} && params->{popular_names} eq 'true' ? 1 : 0;
   
   database->do("CALL get_rands(5, ?, ?)", undef, $sex, $popular_names);
   
@@ -31,25 +35,37 @@ get '/name/:id' => sub {
   my $data = $sth->fetchall_hashref(['year']);
 
   $data = {
+    id   => $data->{(keys %$data)[0]}->{id},
     name => $data->{(keys %$data)[0]}->{name},
     sex  => $data->{(keys %$data)[0]}->{sex},   
     years => $data,
   };
   
-  template 'name.tt', $data, { layout => undef };
+  template 'name', $data;
   
 };
 
 # SEARCH
 
-get '/names' => sub {
+get '/search' => sub {
+  template 'search', {};
+};
+
+any ['get', 'post'] => '/search' => sub {
   
   my $sth = database->prepare("SELECT name.id, name.name, name.sex FROM name WHERE name LIKE ? ORDER BY name DESC;");
-  $sth->execute(params->{query});
+  $sth->execute('%'.params->{query}.'%');
+  
   my $data = $sth->fetchall_hashref(['id']);
+  my @mapped_data = map { $data->{$_} } keys %$data;
   
-  template 'names.tt', { names => $data }, { layout => undef };
+  template 'search', { variable => "", names => \@mapped_data };
   
+};
+
+get '/browse' => sub {
+  
+  template 'browse', { years => [(1910..2012)], states => ['AK','AL','AR','AZ','CA','CO','CT','DC','DE','FL','GA','HI','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY'] };
 };
 
 # POPULAR NAMES BY YEAR
@@ -70,9 +86,7 @@ get '/year/:year' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{year_score} <=> $data->{$a}->{year_score} } keys %$data;
   
-  debug Dumper(\@sorted_data);
-  
-  template 'names.tt', { variable => $year, names => \@sorted_data }, { layout => undef };
+  template 'names', { variable => $year, names => \@sorted_data };
   
 };
 
@@ -94,7 +108,7 @@ get '/state/:state' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{state_score} <=> $data->{$a}->{state_score} } keys %$data;
   
-  template 'names.tt', { variable => $state, names => \@sorted_data }, { layout => undef };
+  template 'names', { variable => $state, names => \@sorted_data };
   
 };
 
@@ -117,7 +131,7 @@ get '/year/:year/state/:state' => sub {
   
   my @sorted_data = map { $data->{$_} } sort { $data->{$b}->{state_score} <=> $data->{$a}->{state_score} } keys %$data;
   
-  template 'names.tt', { variable => "$year in $state", names => \@sorted_data }, { layout => undef };
+  template 'names', { variable => "$year in $state", names => \@sorted_data };
   
 };
 
