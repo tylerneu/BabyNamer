@@ -4,3 +4,6 @@
 [submodule "spin.js"]
 	path = spin.js
 	url = https://github.com/fgnass/spin.js.git
+[submodule "public/javascripts/Chart.js"]
+	path = public/javascripts/Chart.js
+	url = https://github.com/nnnick/Chart.js.git

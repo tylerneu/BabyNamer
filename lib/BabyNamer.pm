@@ -3,6 +3,7 @@ use Dancer ':syntax';
 use Dancer::Plugin::Database;
 use Dancer::Plugin::Ajax;
 use Data::Dumper;
+use JSON;
 
 our $VERSION = '0.1';
 
@@ -75,11 +76,23 @@ get '/name/:id' => sub {
     $data->{$most_year}->{popularity} = 'most';
   }
 
+  # Create chart data
+
+  my %chart_data = (
+    labels => [sort keys %$data],
+    datasets => [
+      {
+        data => [map { $data->{$_}->{yearly_score} } sort keys %$data], 
+      },
+    ]
+  );
+
   $data = {
     id                  => $data->{(keys %$data)[0]}->{id},   # 
     name                => $data->{(keys %$data)[0]}->{name}, # Pull demographics from first year listed
     sex                 => $data->{(keys %$data)[0]}->{sex},  # 
     years               => $data,
+    chart_data          => to_json(\%chart_data),
   };
   
   template 'name', $data;

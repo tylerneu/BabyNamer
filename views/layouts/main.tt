@@ -17,6 +17,7 @@
     <script src="/javascripts/spin.js/jquery.spin.js" type="text/javascript" charset="utf-8"></script>
     <script src="/javascripts/global.js" type="text/javascript" charset="utf-8"></script>
   	<script src="/javascripts/names.js" type="text/javascript" charset="utf-8"></script>
+  	<script src="/javascripts/Chart.js-master/Chart.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
     <% INCLUDE '_header.tt' %>

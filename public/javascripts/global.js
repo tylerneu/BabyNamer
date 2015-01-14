@@ -36,6 +36,12 @@ $(function() {
     $('#sex').val(saved_controls.sex);
     $('#popular_names').prop('checked', saved_controls.popularity);
   }
+
+  // Create chart
+  if ($('#chart')) {
+    var ctx = $("#chart").get(0).getContext("2d");
+    var myLineChart = new Chart(ctx).Line(chart_data, {});
+  }
   
   get_saved_names();
   display_name();
